@@ -1,0 +1,232 @@
+#add-friend-pop-up {
+  width: 290px;
+  height: fit-content;
+  background-color: #647b84;
+  border-radius: 20px;
+  padding: 20px;
+  position: absolute;
+  top: 100px;
+  left: 690px;
+  z-index: 10;
+}
+
+#add-friend-pop-up input[type="text"]::placeholder {
+  text-align: center;
+}
+
+#add-friend-pop-up input[type="text"] {
+  height: 20px;
+  padding: 2px;
+  background-color: #4a5559;
+  border: none;
+  border-radius: 10px;
+}
+
+.add-friend-btn-2 {
+  background-color: var(--dark-gray);
+  border-radius: 10px;
+  padding: 5px;
+}
+#add-friend-pop-up .request {
+  display: flex;
+  padding: 5px;
+}
+
+#add-friend-pop-up .request h4 {
+  padding: 5px 10px;
+  margin-top: 7px;
+}
+
+#add-friend-pop-up .request .accept-reject-btns {
+  margin-top: 11px;
+}
+
+#add-friend-pop-up .request .accept-reject-btns .accept {
+  background-color: var(--light-geen);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+#add-friend-pop-up .request .accept-reject-btns .reject {
+  background-color: var(--light-red);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.hidden-popup {
+  visibility: hidden;
+}
+
+.friend-channels {
+  width: 270px;
+  height: 99.8vh;
+  float: left;
+}
+
+.friend-channels-divider {
+  /* border: 1px solid brown; */
+  height: 99.8vh;
+  padding: 20px;
+}
+
+.f-t-group {
+  padding: 10px;
+}
+
+.f-group {
+  padding: 10px;
+}
+
+.f-group a {
+  display: flex;
+}
+
+.f-group a span {
+  padding-left: 5px;
+  position: relative;
+  top: 5px;
+}
+
+.t-group {
+  padding: 10px;
+}
+
+.t-group a {
+  display: flex;
+}
+
+.t-group a span {
+  padding-left: 5px;
+  position: relative;
+  top: 5px;
+}
+
+.user-btn {
+  display: flex;
+}
+
+.user-image img {
+  width: 30px;
+}
+
+.user-userid {
+  padding-left: 5px;
+}
+
+.main-friend-chat {
+  /* border: 1px solid white; */
+  /* float: right; */
+  width: 1557px;
+  /* overflow: hidden; */
+}
+
+.main-friend-chat h3 {
+  padding-top: 7px;
+  padding-left: 4px;
+}
+
+.nav-btn {
+  padding-top: 7px;
+  padding-left: 4px;
+}
+
+.all-friend-btn {
+  border-radius: 5px;
+  padding: 2px 5px;
+  background-color: gray;
+}
+
+.add-friend-btn {
+  padding: 2px 7px;
+  margin-left: 7px;
+  border-radius: 20px;
+  background-color: #008000;
+}
+
+.f-chat {
+  position: relative;
+  float: left;
+}
+
+.chat-box-divider {
+  border: 1px solid white;
+}
+
+.chat-userid {
+  /* border: 1px solid #ffffff; */
+  display: flex;
+  padding: 5px 10px;
+  margin-left: 400px;
+}
+
+.chat-monitor {
+  height: 85vh;
+  width: 60vw;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-message {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.client-message {
+  /* float: right; */
+  padding: 5px;
+  margin-left: 40vw;
+  /* right: 200px; */
+}
+
+.chat-input input[type="text"]::placeholder {
+  color: #ffffff;
+}
+
+.chat-input input[type="text"] {
+  width: 500px;
+  height: 30px;
+  padding: 5px 15px;
+  background-color: var(--secondary-color);
+  border-radius: 30px;
+  font-size: 20px;
+  border: none;
+}
+
+.chat-input button {
+  border: none;
+}
+
+.no-chat-open {
+  width: 1135px;
+  height: 500px;
+  text-align: center;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.no-chat-open span h1 {
+  position: relative;
+  top: 50%;
+}
+
+.current-work-tab {
+  float: right;
+  /* border: 1px solid white; */
+  overflow: hidden;
+  width: 300px;
+  /* height: 830px; */
+  height: 70vh;
+}
+
+.c-w-header {
+  text-align: center;
+}
+
+.c-w-main {
+  text-align: center;
+  position: relative;
+  top: 50%;
+  height: 40px;
+}

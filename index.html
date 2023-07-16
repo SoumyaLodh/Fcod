@@ -7,14 +7,40 @@
     <link rel="stylesheet" href="./css/util.css">
     <link rel="stylesheet" href="./css/index.css">
 </head>
+<script src="./js/index.js" defer></script>
 
 <body bgcolor="#31383b">
+    <div class="hidden-popup popup" id="add-friend-pop-up">
+        <h1>Friend Request</h1>
+        <input type="text" placeholder="Enter Friend's ID">
+        <a href="#" onclick="addUserPopupClose()" class="add-friend-btn-2">Send Request</a>
+        <div class="incoming-request">
+            <br>
+            <h1>Incoming Request</h1>
+            <div class="request 1">
+                <img src="./src/img/logo/discord.png" width="40px" />
+                <h4>Username 2</h4>
+                <div class="btn accept-reject-btns">
+                    <a href="#" onclick="addUserPopupClose()" class="accept">Accept</a>
+                    <a href="#" onclick="addUserPopupClose()" class="reject">Reject</a>
+                </div>
+            </div>
+            <div class="request 2">
+                <img src="./src/img/logo/discord.png" width="40px" />
+                <h4>Username 2</h4>
+                <div class="btn accept-reject-btns">
+                    <a href="#" onclick="addUserPopupClose()" class="accept">Accept</a>
+                    <a href="#" onclick="addUserPopupClose()" class="reject">Reject</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="left-side-icons">
             <div class="header">
                 <div class="logo-icon">
                     <a href="#">
-                        <img src="./src/img/logo/discord.png" alt="logo" width="50px" />
+                        <img src="./src/img/logo/Fcod.png" alt="logo" width="50px" />
                     </a>
                 </div>
             </div>
@@ -26,7 +52,7 @@
                     </a>
                 </div>
                 <div class="server-icon">
-                    <a href="#">
+                    <a href="#  ">
                         <img src="./src/img/logo/discord.png" alt="logo" width="50px" />
                     </a>
                 </div>
@@ -44,15 +70,15 @@
         </div>
         <div class="main-section">
             <div class="main-divider">
-                <div class="server-channels">
-                    <div class="server-channels-divider">
+                <div class="friend-channels">
+                    <div class="friend-channels-divider">
                         <div class="search-bar">
                             <input type="search" class="search-bar" />
                         </div>
                         <div class="f-t-group">
                             <div class="f-group">
                                 <a href="#">
-                                    <img src="./src/img/icons/handshake.png" alt="" width="40px">
+                                    <img src="./src/img/icons/handshake.png" alt="" width="30px">
                                     <span>
                                         <h4 style="display: inline;">Friends</h4>
                                     </span>
@@ -60,7 +86,7 @@
                             </div>
                             <div class="t-group">
                                 <a href="#">
-                                    <img src="./src/img/icons/turbo-engine.png" alt="" width="40px">
+                                    <img src="./src/img/icons/turbo-engine.png" alt="" width="30px">
                                     <span>
                                         <h4 style="display: inline;">Turbo</h4>
                                     </span>
@@ -74,8 +100,8 @@
                                     <b>+</b>
                                 </h5>
                             </div>
-                            <div class="d-m-list">
-                                <div class="user-btn">
+                            <div class="d-m-list" id="dm-list">
+                                <!-- <div class="user-btn">
                                     <div class="user-image">
                                         <br />
                                         <img src="./src/img/logo/discord.png" alt="">
@@ -127,7 +153,7 @@
                                         <br />
                                         <h2>User IDs</h2>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -138,19 +164,186 @@
                         <h3>Friends</h3>
                         <div class="nav-btn">
                             <a href="#" class="all-friend-btn">All</a>
-                            <a href="#" class="add-friend-btn">Add Friends</a>
+                            <a href="#" onclick="addUserPopupOpen()" class="add-friend-btn">Add Friends</a>
                         </div>
                     </div>
                     <div class="f-chat">
                         <!-- condition based section -->
-                        <!-- if there is a use selected from user-btn in direct-message, then it will show the chat of that user -->
-                        <div class="chat-open"></div>
-                        <!-- else there will show "Open a chat" -->
-                        <div class="no-chat-open">
-                            <span>
-                                <h1>Open a chat</h1>
-                            </span>
+                        <div class="chat-open">
+                            <!-- else there will show "Open a chat" -->
+                            <!-- <div class="no-chat-open">
+                                <span>
+                                    <h1>Open a chat</h1>
+                                </span>
+                            </div> -->
+                            <!-- if there is a use selected from user-btn in direct-message, then it will show the chat of that user -->
+                            <div class="chat-box">
+                                <div class="chat-box-divider">
+                                    <div class="chat-userid">
+                                        <img src="./src/img/logo/discord.png" alt="" width="40">
+                                        <h3>Username</h3> <!-- This is friend's username-->
+                                    </div>
+                                    <hr>
+                                    <div class="chat-monitor">
+                                        <!-- Chat Start -->
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="client-message">
+                                            <div class="chat-user-id">
+                                                <h4>Me</h4>
+                                            </div>
+                                            hello Username
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+                                        <div class="friend-message">
+                                            <div class="chat-user-id">
+                                                <h4>username</h4>
+                                            </div>
+                                            Hello Owner
+                                        </div>
+
+
+                                        <!-- Chat End -->
+                                    </div>
+                                    <div class="chat-input">
+                                        <input type="text" placeholder="Enter Text">
+                                        <a href="#">
+                                            <img src="./src/img/icons/send.png" width="20px" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="current-work-tab">
