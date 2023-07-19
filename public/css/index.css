@@ -62,7 +62,6 @@
   height: 99.8vh;
   float: left;
 }
-
 .friend-channels-divider {
   /* border: 1px solid brown; */
   height: 99.8vh;
@@ -140,7 +139,7 @@
   padding: 2px 7px;
   margin-left: 7px;
   border-radius: 20px;
-  background-color: #008000;
+  background-color: #00c5a8;
 }
 
 .f-chat {
@@ -148,9 +147,13 @@
   float: left;
 }
 
-.chat-box-divider {
-  border: 1px solid white;
+.chat-box {
+  background-color: var(--secondary-color);
+  border-radius: 7px;
 }
+/* .chat-box-divider {
+  
+} */
 
 .chat-userid {
   /* border: 1px solid #ffffff; */

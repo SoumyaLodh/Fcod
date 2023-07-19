@@ -1,13 +1,17 @@
 :root {
   --primary-color: #31383b;
-  --secondary-color: #3e494d;
+  --secondary-color: #475159;
+  --third-color: #00c5a8;
   /* Dark colors */
   --green: #008000;
   --dark-gray: #32525e;
   /* Light colors */
+  --cyan: #4ab6a6;
   --light-geen: #3bb27a;
   --light-red: #b23b3b;
   --light-gray: #808080;
+
+  --btn-color: var(--cyan);
 }
 
 * {
@@ -18,6 +22,9 @@
 
 body {
   min-width: 1629px;
+}
+
+hr {
 }
 
 a {
