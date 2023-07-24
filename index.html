@@ -159,16 +159,17 @@
     <script src="socket.io/socket.io.js"></script>
     <script>
         const socket = io()
+        socket.on("connect", () => {
+            // console.log(socket.id)
+        })
         while (true) {
             const name = prompt("Enter name to enter")
             if (name != null && name.length > 3) {
-                console.log(name)
+                socket.emit('new-user-joined', name)
                 break;
             }
         }
-        socket.on("connect", () => {
-            console.log(socket.id)
-        })
+
         const chatMonitor = document.getElementById("chat-m-box");
         const messageInput = document.getElementById("message-input");
 
@@ -181,23 +182,32 @@
             </div>
             ${message}
             `
-            // console.log(name, message, side)
             chatMonitor.append(messageElement)
         }
 
-        socket.emit('new-user-joined', name)
         socket.on('user-joined', name => {
-            console.log(name)
             append(name, `${name} is joined the chat.`, "friend")
         })
-
+        messageInput.addEventListener("keydown", event => {
+            if (event.keyCode == 13) {
+                const clientMessage = messageInput.value
+                if (clientMessage.length > 0) {
+                    socket.emit("send-message", clientMessage)
+                    append(`Me`, clientMessage, "client")
+                    messageInput.value = ""
+                }
+            }
+        })
         let sendMessageBtn = document.getElementById("send-message-btn")
         sendMessageBtn.addEventListener("click", (event) => {
-            const D = new Date()
+            event.preventDefault()
             const clientMessage = messageInput.value
-            socket.emit("send-message", clientMessage)
-            append(`Me`, clientMessage, "client")
-            messageInput.value = ""
+            if (clientMessage.length > 0) {
+
+                socket.emit("send-message", clientMessage)
+                append(`Me`, clientMessage, "client")
+                messageInput.value = ""
+            }
         })
 
         socket.on("receive", data => {

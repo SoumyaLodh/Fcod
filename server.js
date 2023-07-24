@@ -18,7 +18,9 @@ io.on("connection", (socket) => {
   console.log("New ID created: " + socket.id);
 
   socket.on("new-user-joined", (name) => {
+    console.log(name);
     users[socket.id] = name;
+    console.log(users);
     socket.broadcast.emit("user-joined", name);
   });
 
@@ -32,4 +34,5 @@ io.on("connection", (socket) => {
     console.log(disconnect + " | ID: " + socket.id + " | " + users[socket.id]);
   });
 });
+
 http.listen(PORT);
