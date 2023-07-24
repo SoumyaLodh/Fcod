@@ -101,7 +101,6 @@
                                 </h5>
                             </div>
                             <div class="d-m-list" id="dm-list">
-
                             </div>
                         </div>
                     </div>
@@ -133,20 +132,6 @@
                                     </div>
                                     <hr>
                                     <div class="chat-monitor" id="chat-m-box">
-                                        <!-- Chat Start -->
-                                        <div class="friend-message">
-                                            <div class="chat-user-id">
-                                                <h4>username</h4>
-                                            </div>
-                                            Hello Owner
-                                        </div>
-                                        <div class="client-message">
-                                            <div class="chat-user-id">
-                                                <h4>Me</h4>
-                                            </div>
-                                            hello Username
-                                        </div>
-                                        <!-- Chat End -->
                                     </div>
                                     <div class="chat-input">
                                         <input type="text" placeholder="Enter Text" id="message-input">
@@ -174,7 +159,13 @@
     <script src="socket.io/socket.io.js"></script>
     <script>
         const socket = io()
-        const name = prompt("Enter name to enter")
+        while (true) {
+            const name = prompt("Enter name to enter")
+            if (name != null && name.length > 3) {
+                console.log(name)
+                break;
+            }
+        }
         socket.on("connect", () => {
             console.log(socket.id)
         })
@@ -190,7 +181,7 @@
             </div>
             ${message}
             `
-            console.log(name, message, side)
+            // console.log(name, message, side)
             chatMonitor.append(messageElement)
         }
 
