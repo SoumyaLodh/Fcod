@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/util.css">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="shortcut icon" href="/src/img/logo/Fcod.png" type="image/x-icon">
 </head>
 <!-- <script src="/js/index.js" defer></script> -->
 
-<body bgcolor="#31383b">
+<body>
     <div class="hidden-popup popup" id="add-friend-pop-up">
         <h1>Friend Request</h1>
         <input type="text" placeholder="Enter Friend's ID">
@@ -72,7 +74,7 @@
             <div class="main-divider">
                 <div class="friend-channels">
                     <div class="friend-channels-divider">
-                        <div class="search-bar">
+                        <div>
                             <input type="search" class="search-bar" />
                         </div>
                         <div class="f-t-group">
@@ -95,8 +97,7 @@
                         </div>
                         <div class="direct-message">
                             <div class="d-m-header">
-                                <h5 style="color: white;">DIRECT MESSAGE
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <h5 style="color: white;"><span>DIRECT MESSAGE</span>
                                     <b>+</b>
                                 </h5>
                             </div>
@@ -106,7 +107,7 @@
                     </div>
                 </div>
                 <div class="main-friend-chat">
-                    <div class="f-header" style="display: flex;">
+                    <div class="f-header">
                         <img src="/src/img/icons/handshake.png" alt="logo" width="30px" />
                         <h3>Friends</h3>
                         <div class="nav-btn">
@@ -156,11 +157,13 @@
         </div>
     </div>
     </div>
+    <script src="/index.js">
+
+    </script>
     <script src="socket.io/socket.io.js"></script>
     <script>
         const socket = io()
         socket.on("connect", () => {
-            // console.log(socket.id)
         })
         while (true) {
             const name = prompt("Enter name to enter")
@@ -172,7 +175,9 @@
 
         const chatMonitor = document.getElementById("chat-m-box");
         const messageInput = document.getElementById("message-input");
-
+        chatMonitor.addEventListener("change", (e) => {
+            this.scrollTo(100)
+        })
         const append = (name, message, side) => { //side = server or client response
             const messageElement = document.createElement("div")
             messageElement.classList.add(`${side}-message`)
@@ -183,6 +188,7 @@
             ${message}
             `
             chatMonitor.append(messageElement)
+
         }
 
         socket.on('user-joined', name => {
@@ -190,23 +196,26 @@
         })
         messageInput.addEventListener("keydown", event => {
             if (event.keyCode == 13) {
+                const chatMonitor = document.getElementById("chat-m-box");
                 const clientMessage = messageInput.value
                 if (clientMessage.length > 0) {
                     socket.emit("send-message", clientMessage)
                     append(`Me`, clientMessage, "client")
                     messageInput.value = ""
+
                 }
             }
         })
         let sendMessageBtn = document.getElementById("send-message-btn")
         sendMessageBtn.addEventListener("click", (event) => {
             event.preventDefault()
+            const chatMonitor = document.getElementById("chat-m-box");
             const clientMessage = messageInput.value
             if (clientMessage.length > 0) {
-
                 socket.emit("send-message", clientMessage)
                 append(`Me`, clientMessage, "client")
                 messageInput.value = ""
+                // window.scrollTo(0, document.body.scrollTop)
             }
         })
 

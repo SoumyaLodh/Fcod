@@ -1,0 +1,48 @@
+@media screen and (max-width: 1280px) {
+  .f-t-group {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .d-m-header b {
+    margin-left: 25%;
+  }
+  .main-friend-chat {
+    width: 78%;
+  }
+
+  .client-message {
+    float: right;
+  }
+  .chat-input input[type="text"] {
+    width: 90%;
+  }
+  .current-work-tab {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+}
+
+@media screen and (max-width: 950px) {
+  .friend-channels {
+    display: none;
+  }
+  .main-friend-chat {
+    width: 98%;
+  }
+  .chat-userid {
+    margin-left: 40%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .main-friend-chat {
+    height: 100%;
+  }
+  .f-header {
+    display: none;
+  }
+  .f-chat {
+    padding-top: 5px;
+  }
+}

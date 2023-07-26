@@ -6,7 +6,7 @@
   padding: 20px;
   position: absolute;
   top: 100px;
-  left: 690px;
+  left: 40%;
   z-index: 10;
 }
 
@@ -54,7 +54,13 @@
 }
 
 .hidden-popup {
-  visibility: hidden;
+  display: none;
+}
+
+.search-bar {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--secondary-color);
 }
 
 .friend-channels {
@@ -64,7 +70,7 @@
 }
 .friend-channels-divider {
   /* border: 1px solid brown; */
-  height: 99.8vh;
+  /* height: 99.8vh; */
   padding: 20px;
 }
 
@@ -99,7 +105,9 @@
   position: relative;
   top: 5px;
 }
-
+.d-m-header b {
+  margin-left: 20%;
+}
 .user-btn {
   display: flex;
 }
@@ -113,15 +121,16 @@
 }
 
 .main-friend-chat {
-  /* border: 1px solid white; */
-  /* float: right; */
-  width: 1557px;
-  /* overflow: hidden; */
+  width: 100%;
 }
 
 .main-friend-chat h3 {
   padding-top: 7px;
   padding-left: 4px;
+}
+
+.f-header {
+  display: flex;
 }
 
 .nav-btn {
@@ -142,10 +151,10 @@
   background-color: #00c5a8;
 }
 
-.f-chat {
+/* .f-chat {
   position: relative;
   float: left;
-}
+} */
 
 .chat-box {
   background-color: var(--secondary-color);
@@ -163,24 +172,30 @@
 }
 
 .chat-monitor {
+  display: block;
   height: 85vh;
-  width: 60vw;
+  /* width: 60vw; */
+  width: 100%;
   overflow: hidden;
   overflow-y: scroll;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
 }
 
 .friend-message {
   padding: 5px;
   margin-left: 10px;
+  max-width: 400px;
 }
 
 .client-message {
-  /* float: right; */
+  float: right;
   padding: 5px;
   margin-left: 40vw;
-  /* right: 200px; */
+  width: auto;
+  box-sizing: border-box;
+  max-width: 400px;
+  word-wrap: break-word;
 }
 
 .chat-input input[type="text"]::placeholder {
@@ -215,12 +230,13 @@
 }
 
 .current-work-tab {
-  float: right;
+  /* float: right; */
   /* border: 1px solid white; */
-  overflow: hidden;
-  width: 300px;
+  /* overflow: hidden; */
+  /* width: 300px; */
   /* height: 830px; */
   height: 70vh;
+  padding: 80px;
 }
 
 .c-w-header {

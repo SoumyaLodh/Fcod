@@ -7,10 +7,13 @@
   --dark-gray: #32525e;
   /* Light colors */
   --cyan: #4ab6a6;
+  --cyan-2: #00c5a8;
   --light-geen: #3bb27a;
   --light-red: #b23b3b;
   --light-gray: #808080;
 
+  /* colors with class name */
+  --friend-request-bg-color: #647b84;
   --btn-color: var(--cyan);
 }
 
@@ -20,12 +23,30 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-  min-width: 1629px;
+body,
+html {
+  scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: var(--primary-color);
+  /* background-image: radial-gradient(
+    circle,
+    #00bdff,
+    #00c6ff,
+    #00cfff,
+    #00d7ff,
+    #00dfff,
+    #00e5fc,
+    #00ebf8,
+    #00f1f3,
+    #00f6e4,
+    #00fbcf,
+    #00fdb2,
+    #00ff90
+  ); */
 }
-
-hr {
-}
+/* hr {
+} */
 
 a {
   text-decoration: none;
@@ -34,7 +55,7 @@ a {
 
 .container {
   padding-left: 10px;
-  height: 100vh;
+  /* height: 90vh; */
 }
 
 .left-side-icons {
@@ -50,5 +71,6 @@ a {
 
 .main-divider {
   /* border: 1px solid thistle; */
-  overflow: hidden;
+  /* overflow: hidden; */
+  display: flex;
 }
