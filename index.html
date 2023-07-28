@@ -178,22 +178,29 @@
         chatMonitor.addEventListener("change", (e) => {
             this.scrollTo(100)
         })
+
         const append = (name, message, side) => { //side = server or client response
             const messageElement = document.createElement("div")
+            const D = new Date()
+            const hour = D.getHours();
+            const min = D.getMinutes();
+
+
             messageElement.classList.add(`${side}-message`)
             messageElement.innerHTML = `
             <div class="chat-user-id">
-                <h4>${name}</h4>
+                <span></span>
+                <h4>${name} | ${hour}:${min}</h4> 
             </div>
             ${message}
             `
             chatMonitor.append(messageElement)
-
         }
 
         socket.on('user-joined', name => {
             append(name, `${name} is joined the chat.`, "friend")
         })
+
         messageInput.addEventListener("keydown", event => {
             if (event.keyCode == 13) {
                 const chatMonitor = document.getElementById("chat-m-box");
@@ -202,10 +209,10 @@
                     socket.emit("send-message", clientMessage)
                     append(`Me`, clientMessage, "client")
                     messageInput.value = ""
-
                 }
             }
         })
+
         let sendMessageBtn = document.getElementById("send-message-btn")
         sendMessageBtn.addEventListener("click", (event) => {
             event.preventDefault()

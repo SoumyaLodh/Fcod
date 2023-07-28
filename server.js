@@ -8,6 +8,14 @@ const PORT = 8000;
 
 const users = {};
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// app.get("/php/:file", async (req, res) => {
+//   console.log(req.method + " - " + req.url);
+//   const id = req.params.id;
+// });
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {

@@ -1,3 +1,4 @@
+/* Width responsive CSS */
 @media screen and (max-width: 1280px) {
   .f-t-group {
     padding-top: 10px;
@@ -44,5 +45,34 @@
   }
   .f-chat {
     padding-top: 5px;
+  }
+  .chat-input input[type="text"] {
+    width: 86%;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .chat-input input[type="text"] {
+    width: 82%;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .left-side-icons {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .chat-input {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+/* height responsive CSS */
+@media screen and (max-height: 648px) {
+  .chat-monitor {
+    height: 80vh;
   }
 }
