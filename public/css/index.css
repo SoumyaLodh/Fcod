@@ -200,10 +200,11 @@
 
 .chat-input input[type="text"]::placeholder {
   color: #ffffff;
+  width: 90%;
 }
 
 .chat-input input[type="text"] {
-  width: 500px;
+  width: 88%;
   height: 30px;
   padding: 5px 15px;
   background-color: var(--secondary-color);

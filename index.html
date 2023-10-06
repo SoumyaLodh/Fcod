@@ -167,7 +167,7 @@
         })
         while (true) {
             const name = prompt("Enter name to enter")
-            if (name != null && name.length > 3) {
+            if (name != null /*&& name.length > 3*/) {
                 socket.emit('new-user-joined', name)
                 break;
             }
@@ -179,22 +179,47 @@
             this.scrollTo(100)
         })
 
-        const append = (name, message, side) => { //side = server or client response
+        const append = (name, message, side, isApiResponse, ApiResponseType) => { //side = server or client response
             const messageElement = document.createElement("div")
             const D = new Date()
             const hour = D.getHours();
             const min = D.getMinutes();
 
+            if (isApiResponse) {
+                if (ApiResponseType == "links") {
+                    const messageContent = message.map(element => `<a href="${element.link}" style="padding-bottom: 5px;text-decoration: underline;">${element.title}</a> <br>`).join('');
+                    messageElement.classList.add(`${side}-message`)
+                    messageElement.innerHTML = `
+                <div class="chat-user-id">
+                    <span></span>
+                    <h4>${name} | ${hour}:${min}</h4>
+                    ${messageContent}
+                </div>
+                `
+                    chatMonitor.append(messageElement)
+                } else {
+                    messageElement.classList.add(`${side}-message`)
+                    messageElement.innerHTML = `
+                <div class="chat-user-id">
+                    <span></span>
+                    <h4>${name} | ${hour}:${min}</h4>
+                    ${message.text}
+                </div>
+                `
+                    chatMonitor.append(messageElement)
+                }
+            } else {
+                messageElement.classList.add(`${side}-message`)
+                messageElement.innerHTML = `
+                <div class="chat-user-id">
+                    <span></span>
+                    <h4>${name} | ${hour}:${min}</h4> 
+                </div>
+                ${message}
+                `
+                chatMonitor.append(messageElement)
+            }
 
-            messageElement.classList.add(`${side}-message`)
-            messageElement.innerHTML = `
-            <div class="chat-user-id">
-                <span></span>
-                <h4>${name} | ${hour}:${min}</h4> 
-            </div>
-            ${message}
-            `
-            chatMonitor.append(messageElement)
         }
 
         socket.on('user-joined', name => {
@@ -222,17 +247,26 @@
                 socket.emit("send-message", clientMessage)
                 append(`Me`, clientMessage, "client")
                 messageInput.value = ""
-                // window.scrollTo(0, document.body.scrollTop)
             }
         })
 
         socket.on("receive", data => {
-            append(data.name, data.message, "friend")
-        })
+            append(data.name, data.message, "friend", false)
+            console.log(data.consoleLog)
+            if (data.consoleLog != null) {
+                
+                try {
+                    append("Server", data.consoleLog.featured_snippets[0].value, "friend", true)
+                } catch (error) {
+                    console.error(error)
+                    append("Server", "There is no answer from google. Try below links.", "friend")
+                    append("Server", data.consoleLog.organic, "friend", true, "links")
+                }
+
+            }})
         socket.on("user-disconnected", data => {
             append(data.name, `${data.name} has been disconnected`, "friend")
         })
-
     </script>
 </body>
 

@@ -1,20 +1,29 @@
+require('dotenv').config({path: "./.env.local"});
 const express = require("express");
 const path = require("path");
 const app = express();
 
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
-const PORT = 8000;
+const PORT = process.env.PORT || 8080
 
 const users = {};
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.get("/php/:file", async (req, res) => {
-//   console.log(req.method + " - " + req.url);
-//   const id = req.params.id;
-// });
+
+async function FetchAPI(search){
+  const response = await fetch(`https://api.apilayer.com/google_search?q=${search}`, {
+    method: "GET",
+    headers: {
+      "apikey": process.env.API_KEY
+    }
+  })
+  const res2 = response.json()
+  console.log(res2)
+  return res2;
+}
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -34,7 +43,16 @@ io.on("connection", (socket) => {
 
   socket.on("send-message", (msg) => {
     console.log(socket.id + " " + msg);
-    socket.broadcast.emit("receive", { message: msg, name: users[socket.id] });
+    
+    if(msg.startsWith("!search ")) {
+      console.log(msg)
+      const qtext = msg.replace("!search ", "").replace(" ", "+")
+      console.log(qtext)
+      FetchAPI(qtext).then((res => socket.emit("receive", { message: msg, name: users[socket.id], consoleLog: res})))
+      
+    }else{
+      socket.broadcast.emit("receive", { message: msg, name: users[socket.id], consoleLog: null});
+    }
   });
 
   socket.on("disconnect", (disconnect) => {
