@@ -3,14 +3,7 @@
   "builds": [
     {
       "src": "index.js",
-<<<<<<< HEAD
       "use": "@vercel/node"
-=======
-      "use": "@vercel/node",
-      "functions": {
-        "api": "*"
-      }
->>>>>>> main
     }
   ]
 }
