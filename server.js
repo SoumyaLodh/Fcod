@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (disconnect) => {
     socket.broadcast.emit("user-disconnected", { name: users[socket.id] });
     console.log(disconnect + " | ID: " + socket.id + " | " + users[socket.id]);
+    users[socket.id] = null
   });
 });
 

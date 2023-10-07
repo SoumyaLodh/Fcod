@@ -113,6 +113,7 @@
                         <div class="nav-btn">
                             <a href="#" class="all-friend-btn">All</a>
                             <a href="#" onclick="addUserPopupOpen()" class="add-friend-btn">Add Friends</a>
+                            <a href="#" onclick="logout()">logout</a>
                         </div>
                     </div>
                     <div class="f-chat">
@@ -162,16 +163,28 @@
     </script>
     <script src="socket.io/socket.io.js"></script>
     <script>
+        function logout() {
+            localStorage.clear()
+            window.location.reload();
+        }
         const socket = io()
+        let name = null;
         socket.on("connect", () => {
         })
-        while (true) {
-            const name = prompt("Enter name to enter")
-            if (name != null /*&& name.length > 3*/) {
-                socket.emit('new-user-joined', name)
-                break;
+        if(localStorage.getItem("access-name-if")){
+            name = localStorage.getItem("access-name-if");
+            socket.emit('new-user-joined', name)
+        }else{
+            while (true) {
+                name = prompt("Enter name to enter")
+                if (name != null && name.length > 3) {
+                    socket.emit('new-user-joined', name)
+                    localStorage.setItem("access-name-if", name);
+                    break;
+                }
             }
         }
+
 
         const chatMonitor = document.getElementById("chat-m-box");
         const messageInput = document.getElementById("message-input");
@@ -228,12 +241,16 @@
 
         messageInput.addEventListener("keydown", event => {
             if (event.keyCode == 13) {
-                const chatMonitor = document.getElementById("chat-m-box");
-                const clientMessage = messageInput.value
-                if (clientMessage.length > 0) {
-                    socket.emit("send-message", clientMessage)
-                    append(`Me`, clientMessage, "client")
-                    messageInput.value = ""
+                if(!localStorage.getItem("access-name-if")){
+                    logout();
+                }else{
+                    const chatMonitor = document.getElementById("chat-m-box");
+                    const clientMessage = messageInput.value
+                    if (clientMessage.length > 0) {
+                        socket.emit("send-message", clientMessage)
+                        append(`Me`, clientMessage, "client")
+                        messageInput.value = ""
+                    }
                 }
             }
         })
@@ -241,13 +258,17 @@
         let sendMessageBtn = document.getElementById("send-message-btn")
         sendMessageBtn.addEventListener("click", (event) => {
             event.preventDefault()
-            const chatMonitor = document.getElementById("chat-m-box");
-            const clientMessage = messageInput.value
-            if (clientMessage.length > 0) {
-                socket.emit("send-message", clientMessage)
-                append(`Me`, clientMessage, "client")
-                messageInput.value = ""
-            }
+            if(!localStorage.getItem("access-name-if")){
+                    logout();
+                }else{
+                    const chatMonitor = document.getElementById("chat-m-box");
+                    const clientMessage = messageInput.value
+                    if (clientMessage.length > 0) {
+                        socket.emit("send-message", clientMessage)
+                        append(`Me`, clientMessage, "client")
+                        messageInput.value = ""
+                    }
+                }
         })
 
         socket.on("receive", data => {
