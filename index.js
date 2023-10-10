@@ -1,4 +1,3 @@
-require('dotenv').config({path: "./.env.local"});
 const express = require("express");
 const path = require("path");
 const app = express();
