@@ -24,10 +24,10 @@ async function FetchAPI(search){
   return res2;
 }
 
-app.use(express.static(__dirname + "/publics/"));
+app.use(express.static(__dirname + "/public/"));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(__dirname +"/app.html");
 });
 
 io.on("connection", (socket) => {
