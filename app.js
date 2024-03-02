@@ -50,6 +50,7 @@ io.on("connection", (socket) => {
       FetchAPI(qtext).then((res => socket.emit("receive", { message: msg, name: users[socket.id], consoleLog: res})))
       
     }else{
+      console.log(socket.id + " receive: " + msg);
       socket.broadcast.emit("receive", { message: msg, name: users[socket.id], consoleLog: null});
     }
   });
@@ -58,6 +59,7 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("user-disconnected", { name: users[socket.id] });
     console.log(disconnect + " | ID: " + socket.id + " | " + users[socket.id]);
     users[socket.id] = null
+    delete users[socket.id]
   });
 });
 

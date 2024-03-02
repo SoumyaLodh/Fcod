@@ -170,15 +170,16 @@
         let name = null;
         socket.on("connect", () => {
         })
-        if(localStorage.getItem("access-name-if")){
+        if (localStorage.getItem("access-name-if")) {
             name = localStorage.getItem("access-name-if");
             socket.emit('new-user-joined', name)
-        }else{
+        } else {
             while (true) {
                 name = prompt("Enter name to enter")
                 if (name != null && name.length > 3) {
                     socket.emit('new-user-joined', name)
                     localStorage.setItem("access-name-if", name);
+                    localStorage.setItem("messages", JSON.stringify([]))
                     break;
                 }
             }
@@ -191,7 +192,7 @@
             this.scrollTo(100)
         })
 
-        const append = (name, message, side, isApiResponse, ApiResponseType) => { //side = server or client response
+        const append = ({ name, message, time, side, isApiResponse, ApiResponseType }) => { //side = server or client response
             const messageElement = document.createElement("div")
             const D = new Date()
             const hour = D.getHours();
@@ -225,7 +226,7 @@
                 messageElement.innerHTML = `
                 <div class="chat-user-id">
                     <span></span>
-                    <h4>${name} | ${hour}:${min}</h4> 
+                    <h4>${name} | ${time}</h4> 
                 </div>
                 ${message}
                 `
@@ -235,19 +236,52 @@
         }
 
         socket.on('user-joined', name => {
-            append(name, `${name} is joined the chat.`, "friend")
+            // append(name,${name} is joined the chat.`, "friend")
+            console.log(`${name} is joined the chat.`)
         })
+
+        // When page loading is done the messages will print
+        document.addEventListener("DOMContentLoaded", (event) => {
+            const messages = JSON.parse(localStorage.getItem("messages"))
+            for (const message of messages) {
+                if (localStorage.getItem("access-name-if") === message.name) append({name:`Me`,
+                    message: message.message, 
+                    side: "client"})
+                else append({
+                    name: message.name,
+                    message: message.message,
+                    side: "friend",
+                    time: message.createdAt
+                })
+            }
+        }
+        )
 
         messageInput.addEventListener("keydown", event => {
             if (event.keyCode == 13) {
-                if(!localStorage.getItem("access-name-if")){
+                if (!localStorage.getItem("access-name-if")) {
                     logout();
-                }else{
+                } else {
+                    const messages = JSON.parse(localStorage.getItem("messages"))
                     const chatMonitor = document.getElementById("chat-m-box");
                     const clientMessage = messageInput.value
                     if (clientMessage.length > 0) {
                         socket.emit("send-message", clientMessage)
-                        append(`Me`, clientMessage, "client")
+                        const D = new Date()
+                        const hour = D.getHours();
+                        const min = D.getMinutes();
+                        messages.push({
+                            name: localStorage.getItem("access-name-if"),
+                            message: clientMessage,
+                            createdAt: `${hour}:${min}`
+                        })
+                        console.log("push done")
+                        localStorage.setItem("messages", JSON.stringify(messages))
+                        append({
+                            name: `Me`,
+                            message: clientMessage,
+                            side: "client"
+                        })
                         messageInput.value = ""
                     }
                 }
@@ -257,24 +291,53 @@
         let sendMessageBtn = document.getElementById("send-message-btn")
         sendMessageBtn.addEventListener("click", (event) => {
             event.preventDefault()
-            if(!localStorage.getItem("access-name-if")){
-                    logout();
-                }else{
-                    const chatMonitor = document.getElementById("chat-m-box");
-                    const clientMessage = messageInput.value
-                    if (clientMessage.length > 0) {
-                        socket.emit("send-message", clientMessage)
-                        append(`Me`, clientMessage, "client")
-                        messageInput.value = ""
-                    }
+            if (!localStorage.getItem("access-name-if")) {
+                logout();
+            } else {
+                const messages = JSON.parse(localStorage.getItem("messages"))
+                console.log(messages)
+                const chatMonitor = document.getElementById("chat-m-box");
+                const clientMessage = messageInput.value
+                if (clientMessage.length > 0) {
+                    socket.emit("send-message", clientMessage)
+                    const D = new Date()
+                    const hour = D.getHours();
+                    const min = D.getMinutes();
+                    messages.push({
+                        name: localStorage.getItem("access-name-if"),
+                        message: clientMessage,
+                        createdAt: `${hour}:${min}`
+                    })
+                    localStorage.setItem("messages", JSON.stringify(messages))
+                    append({
+                        name: `Me`,
+                        message: clientMessage,
+                        side: "client"
+                    })
+                    messageInput.value = ""
                 }
+            }
         })
 
         socket.on("receive", data => {
-            append(data.name, data.message, "friend", false)
+            const messages = JSON.parse(localStorage.getItem("messages"))
+            const D = new Date()
+            const hour = D.getHours();
+            const min = D.getMinutes();
+            messages.push({
+                name: data.name,
+                message: data.message,
+                createdAt: `${hour}:${min}`
+            })
+            // append(data.name, data.message, "friend", false)
+            append({
+                name: data.name,
+                message: data.message,
+                side: "friend"
+            })
             console.log(data.consoleLog)
+            localStorage.setItem("messages", JSON.stringify(messages))
             if (data.consoleLog != null) {
-                
                 try {
                     append("Server", data.consoleLog.featured_snippets[0].value, "friend", true)
                 } catch (error) {
@@ -283,9 +346,11 @@
                     append("Server", data.consoleLog.organic, "friend", true, "links")
                 }
 
-            }})
+            }
+        })
         socket.on("user-disconnected", data => {
-            append(data.name, `${data.name} has been disconnected`, "friend")
+            // append(data.name, `${data.name} has been disconnected`, "friend")
+            console.log(`${data.name} has been disconnected`)
         })
     </script>
 </body>
